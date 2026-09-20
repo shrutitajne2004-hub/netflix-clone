@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/movies")
 @RequiredArgsConstructor
@@ -53,6 +55,12 @@ public class MovieController {
     @Operation(summary = "Get movie by ID")
     public ResponseEntity<MovieResponse> getMovie(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.getMovieById(id));
+    }
+
+    @GetMapping("/{id}/similar")
+    @Operation(summary = "Get similar movies", description = "Returns up to 10 movies sharing at least one genre with the given movie, sorted by rating descending.")
+    public ResponseEntity<List<MovieResponse>> getSimilarMovies(@PathVariable Long id) {
+        return ResponseEntity.ok(movieService.getSimilarMovies(id));
     }
 
     @PostMapping

@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
@@ -22,4 +24,13 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
     Page<Movie> findByFilters(@Param("title") String title, @Param("genre") String genre, Pageable pageable);
 
     boolean existsByTitleIgnoreCase(String title);
+
+    /**
+     * Returns movies that share at least one genre with the given movie,
+     * excluding the movie itself. Sorting is handled by the supplied Pageable.
+     */
+    @Query("SELECT DISTINCT m FROM Movie m JOIN m.genres g " +
+           "WHERE g IN (SELECT g2 FROM Movie m2 JOIN m2.genres g2 WHERE m2.id = :movieId) " +
+           "AND m.id <> :movieId")
+    List<Movie> findSimilar(@Param("movieId") Long movieId, Pageable pageable);
 }

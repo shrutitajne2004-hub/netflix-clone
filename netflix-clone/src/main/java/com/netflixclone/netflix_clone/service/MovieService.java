@@ -10,11 +10,14 @@ import com.netflixclone.netflix_clone.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.cache.annotation.CacheEvict;
@@ -101,7 +104,8 @@ public class MovieService {
     @Transactional
     @Caching(evict = {
         @CacheEvict(value = "movies", allEntries = true),
-        @CacheEvict(value = "movie", key = "#id")
+        @CacheEvict(value = "movie", key = "#id"),
+        @CacheEvict(value = "similar", allEntries = true)
     })
     public void deleteMovie(Long id) {
         if (!movieRepository.existsById(id)) {
@@ -109,6 +113,20 @@ public class MovieService {
         }
         movieRepository.deleteById(id);
         log.info("Deleted movie id={}", id);
+    }
+
+    @Transactional(readOnly = true)
+    @Cacheable(value = "similar", key = "#id")
+    public List<MovieResponse> getSimilarMovies(Long id) {
+        if (!movieRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Movie", "id", id);
+        }
+        log.info("Fetching similar movies for id={} (DB hit)", id);
+        Pageable top10ByRating = PageRequest.of(0, 10, Sort.by("averageRating").descending());
+        return movieRepository.findSimilar(id, top10ByRating)
+                .stream()
+                .map(this::toResponse)
+                .collect(Collectors.toList());
     }
 
     // ---- Helpers ----

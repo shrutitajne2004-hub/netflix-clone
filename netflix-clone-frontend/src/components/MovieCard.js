@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { watchlistAPI } from '../api/axiosConfig';
 
-const FALLBACK_POSTER = null;
 
 const MovieCard = ({ movie, inWatchlist = false, onWatchlistChange }) => {
   const navigate = useNavigate();

@@ -2,13 +2,21 @@
 
 A full-stack Netflix clone featuring user authentication, movie browsing, watchlist management, and reviews. Built with a Spring Boot backend and a React frontend, leveraging Redis for caching to improve performance.
 
+## 🔗 Live Demo
+
+- **App:** [https://netflix-clone-zeta-two-47.vercel.app](https://netflix-clone-zeta-two-47.vercel.app)
+- **API Docs (Swagger):** [https://netflix-clone-1-zr5z.onrender.com/swagger-ui/index.html](https://netflix-clone-1-zr5z.onrender.com/swagger-ui/index.html)
+
+> **Note:** This project runs on free-tier hosting (Render, Aiven MySQL, Upstash Redis). A keep-alive ping runs every 10 minutes to minimize cold starts, but the first load may occasionally take 10-20 seconds if the services have been idle.
+
 ## Features
 
 - **User Authentication:** JWT-based login and registration.
-- **Movie Catalog:** Browse and search through a catalog of movies.
+- **Movie Catalog:** Browse and search through a catalog of 45+ movies.
 - **Watchlist:** Add or remove movies from your personal watchlist.
-- **Reviews:** Read and submit reviews for movies.
-- **Caching:** Redis caching for optimized performance.
+- **Reviews:** Read and submit reviews for movies, with live-calculated average ratings.
+- **More Like This:** Genre-based movie recommendations on each movie's details page.
+- **Caching:** Redis caching for optimized performance, with proper cache invalidation on data changes.
 - **API Documentation:** Swagger UI for easy API testing and exploration.
 
 ## Tech Stack
@@ -18,14 +26,14 @@ A full-stack Netflix clone featuring user authentication, movie browsing, watchl
 - **Database:** ![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)
 - **Cache:** ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white)
 - **Security:** JWT (JSON Web Tokens)
-- **Deployment:** Docker (for Redis)
+- **Deployment:** ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white) Render (backend), Vercel (frontend), Aiven (MySQL), Upstash (Redis)
 
 ## Screenshots
 
 <!-- Add screenshots here -->
 > *Screenshot placeholders - to be added*
 
-## Getting Started
+## Getting Started (Local Development)
 
 ### Prerequisites
 
@@ -45,33 +53,34 @@ A full-stack Netflix clone featuring user authentication, movie browsing, watchl
    - `JWT_EXPIRATION_MS` (default: `86400000`)
    - `REDIS_HOST` (default: `localhost`)
    - `REDIS_PORT` (default: `6379`)
+   - `REDIS_PASSWORD` (leave empty for local Docker Redis)
    - `ALLOWED_ORIGIN` (default: `http://localhost:3000`)
 3. **Run Redis:**
-   ```bash
+```bash
    docker run --name netflix-redis -p 6379:6379 -d redis
-   ```
+```
 4. **Run Application:**
    Navigate to `netflix-clone` and start the Spring Boot app:
-   ```bash
+```bash
    cd netflix-clone
    mvn spring-boot:run
-   ```
+```
 
 ### Frontend Setup
 
 1. **Environment Variables:** Set the following environment variable (or let it default to localhost):
    - `REACT_APP_API_BASE_URL` (default: `http://localhost:8080`)
 2. **Install Dependencies:**
-   ```bash
+```bash
    cd netflix-clone-frontend
    npm install
-   ```
+```
 3. **Run Application:**
-   ```bash
+```bash
    npm start
-   ```
+```
 
 ## API Documentation
 
-Once the backend is running, the full API endpoint list and documentation can be explored via Swagger UI:
-- [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) (Local environment)
+- **Local:** [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **Live:** [https://netflix-clone-1-zr5z.onrender.com/swagger-ui/index.html](https://netflix-clone-1-zr5z.onrender.com/swagger-ui/index.html)

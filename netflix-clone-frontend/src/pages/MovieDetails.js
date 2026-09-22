@@ -104,7 +104,7 @@ const MovieDetails = () => {
     ? (Array.isArray(movie.genres) ? movie.genres : Array.from(movie.genres))
     : [];
 
-  const netflixSearchUrl = `https://www.netflix.com/search?q=${encodeURIComponent(movie.title)}`;
+
 
   return (
     <div className="page-wrapper movie-details">
@@ -148,15 +148,7 @@ const MovieDetails = () => {
               ▶ Play Trailer
             </a>
           )}
-          <a
-            id="view-on-netflix-btn"
-            href={netflixSearchUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="btn btn-outline"
-          >
-            𝐍 View on Netflix
-          </a>
+
         </div>
       </div>
 

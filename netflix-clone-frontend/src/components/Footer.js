@@ -14,8 +14,12 @@ const Footer = () => (
       </div>
     </div>
     <div className="footer__bottom">
-      <span>© 2026 Netflix Clone — Phase 1 Resume Project</span>
+      <span>© 2026 NetClone — Educational Portfolio Project</span>
       <span>Spring Boot 4 · React 19 · JWT Auth</span>
+    </div>
+    <div className="footer__disclaimer" style={{ fontSize: '0.7rem', opacity: 0.6, textAlign: 'center', padding: '8px 0' }}>
+      This is an independent educational/portfolio project built for learning purposes.
+      It is not affiliated with, endorsed by, or connected to Netflix, Inc. in any way.
     </div>
   </footer>
 );
